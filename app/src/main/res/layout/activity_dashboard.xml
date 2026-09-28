@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FCFAFF">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent">
+<!--        app:layout_constraintBottom_toTopOf="@+id/bottomNav"-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:id="@+id/tvAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="Member+ Hub"
+                android:textColor="#1A1824"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/imgProfile"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/bg_circle_nutrition"
+                android:backgroundTint="#D1D1D1"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAppTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvAppTitle" />
+
+            <TextView
+                android:id="@+id/badgeHeaderGold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_circle_nutrition"
+                android:backgroundTint="#F2A61F"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="GOLD MEMBER"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+                app:layout_constraintEnd_toStartOf="@+id/imgProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:text="Hai, Novrizal!"
+                android:textColor="#1A1824"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAppTitle" />
+
+            <TextView
+                android:id="@+id/tvGreetingSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="Nikmati cashback 5% &amp; promo kopi eksklusif hari ini"
+                android:textColor="#888888"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGreeting" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardGold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#171A2A"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvGreetingSub">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvCardTier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MEMBER+ GOLD"
+                        android:textColor="#F2A61F"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvCardId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="ID: PP-8829-4412"
+                        android:textColor="#9E9E9E"
+                        android:textSize="11sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCardTier" />
+
+                    <View
+                        android:id="@+id/iconStar"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_nutrition"
+                        android:backgroundTint="#33F2A61F"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvLabelSaldo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Total Saldo Poin Kamu"
+                        android:textColor="#9E9E9E"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCardId" />
+
+                    <TextView
+                        android:id="@+id/tvPoinValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="7.450"
+                        android:textColor="@color/white"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLabelSaldo" />
+
+                    <TextView
+                        android:id="@+id/tvPoinUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="6dp"
+                        android:text="Poin"
+                        android:textColor="#F2A61F"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPoinValue"
+                        app:layout_constraintStart_toEndOf="@+id/tvPoinValue" />
+
+                    <View
+                        android:id="@+id/dividerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#33FFFFFF"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPoinValue" />
+
+                    <TextView
+                        android:id="@+id/tvLabelKonversi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Nilai Konversi Saldo"
+                        android:textColor="#9E9E9E"
+                        android:textSize="11sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dividerCard" />
+
+                    <TextView
+                        android:id="@+id/tvKonversiValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rp 74.500"
+                        android:textColor="#F2A61F"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLabelKonversi" />
+
+                    <TextView
+                        android:id="@+id/btnEksklusif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_circle_nutrition"
+                        android:backgroundTint="#4DFFFFFF"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp"
+                        android:text="Eksklusif Gold"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvKonversiValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvLabelKonversi" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/iconPoin"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_circle_nutrition"
+                android:backgroundTint="#E8EAF6"
+                app:layout_constraintEnd_toStartOf="@+id/iconQR"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardGold" />
+
+            <TextView
+                android:id="@+id/tvPoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Poin Saya"
+                android:textColor="#1A1824"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iconPoin"
+                app:layout_constraintStart_toStartOf="@+id/iconPoin"
+                app:layout_constraintTop_toBottomOf="@+id/iconPoin" />
+
+            <View
+                android:id="@+id/iconQR"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_circle_nutrition"
+                android:backgroundTint="#FFF3E0"
+                app:layout_constraintEnd_toStartOf="@+id/iconRiwayat"
+                app:layout_constraintStart_toEndOf="@+id/iconPoin"
+                app:layout_constraintTop_toTopOf="@+id/iconPoin" />
+
+            <TextView
+                android:id="@+id/tvQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Kode QR"
+                android:textColor="#1A1824"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iconQR"
+                app:layout_constraintStart_toStartOf="@+id/iconQR"
+                app:layout_constraintTop_toBottomOf="@+id/iconQR" />
+
+            <View
+                android:id="@+id/iconRiwayat"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_circle_nutrition"
+                android:backgroundTint="#E8F5E9"
+                app:layout_constraintEnd_toStartOf="@+id/iconVoucher"
+                app:layout_constraintStart_toEndOf="@+id/iconQR"
+                app:layout_constraintTop_toTopOf="@+id/iconPoin" />
+
+            <TextView
+                android:id="@+id/tvRiwayat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Riwayat"
+                android:textColor="#1A1824"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iconRiwayat"
+                app:layout_constraintStart_toStartOf="@+id/iconRiwayat"
+                app:layout_constraintTop_toBottomOf="@+id/iconRiwayat" />
+
+            <View
+                android:id="@+id/iconVoucher"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_circle_nutrition"
+                android:backgroundTint="#FCE4EC"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iconRiwayat"
+                app:layout_constraintTop_toTopOf="@+id/iconPoin" />
+
+            <TextView
+                android:id="@+id/tvVoucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Voucher"
+                android:textColor="#1A1824"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iconVoucher"
+                app:layout_constraintStart_toStartOf="@+id/iconVoucher"
+                app:layout_constraintTop_toBottomOf="@+id/iconVoucher" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardTantangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="32dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvPoin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvTantanganTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tantangan Hari Ini"
+                        android:textColor="#1A1824"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTantanganPoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+200 Poin"
+                        android:textColor="#8B4513"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTantanganDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Beli 2 Kopi Kenangan Mantan sebelum Pukul 15:00"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTantanganTitle" />
+
+                    <TextView
+                        android:id="@+id/tvProgressLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Progress"
+                        android:textColor="#888888"
+                        android:textSize="11sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTantanganDesc" />
+
+                    <TextView
+                        android:id="@+id/tvProgressValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 / 2 Cup"
+                        android:textColor="#1A1824"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvProgressLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvProgressLabel" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="8dp"
+                        android:progress="50"
+                        android:progressTint="#8B4513"
+                        app:layout_constraintTop_toBottomOf="@+id/tvProgressLabel" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottomNav"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/white"-->
+<!--        app:itemIconTint="#F2A61F"-->
+<!--        app:itemTextColor="#F2A61F"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:menu="@menu/bottom_nav_menu" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
