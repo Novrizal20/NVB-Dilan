@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    android:orientation="vertical"
+    tools:context=".myProjek.login">
+
+    <include
+        android:id="@+id/layoutToolbar"
+        layout="@layout/include_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:contentDescription="Logo Member+"
+                android:src="@drawable/logo_member" />
+
+            <TextView
+                android:id="@+id/tvFormTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Masuk"
+                android:textColor="@color/member_gold"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/tvFormSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="Masuk untuk melihat poin dan reward kamu"
+                android:textColor="@color/cream_70"
+                android:textSize="13sp" />
+
+            <!-- Nama (hanya mode Daftar) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNama"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Nama Lengkap"
+                android:textColorHint="@color/cream_70"
+                android:visibility="gone"
+                app:boxStrokeColor="@color/member_gold"
+                app:hintTextColor="@color/member_gold">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/cream" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Email"
+                android:textColorHint="@color/cream_70"
+                app:boxStrokeColor="@color/member_gold"
+                app:hintTextColor="@color/member_gold">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/cream" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Password"
+                android:textColorHint="@color/cream_70"
+                app:boxStrokeColor="@color/member_gold"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/member_gold"
+                app:hintTextColor="@color/member_gold">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/cream" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Konfirmasi password (hanya mode Daftar) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilKonfirmasi"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Konfirmasi Password"
+                android:textColorHint="@color/cream_70"
+                android:visibility="gone"
+                app:boxStrokeColor="@color/member_gold"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/member_gold"
+                app:hintTextColor="@color/member_gold">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etKonfirmasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/cream" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Masuk"
+                android:textColor="@color/espresso"
+                android:textSize="16sp"
+                app:backgroundTint="@color/member_gold"
+                app:cornerRadius="12dp" />
+
+            <TextView
+                android:id="@+id/tvToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:text="Belum punya akun? Daftar"
+                android:textColor="@color/member_gold"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

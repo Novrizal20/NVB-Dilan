@@ -1,9 +1,26 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.NVBDilan" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.NVBDilan" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/espresso</item>
+        <item name="colorOnPrimary">@color/cream</item>
+        <item name="colorPrimaryContainer">@color/coffee_brown</item>
+        <item name="colorOnPrimaryContainer">@color/cream</item>
+        <item name="colorSecondary">@color/member_gold</item>
+        <item name="colorOnSecondary">@color/espresso</item>
+        <item name="colorTertiary">@color/deep_navy</item>
+        <item name="colorOnTertiary">@color/cream</item>
+        <item name="android:colorBackground">@color/cream</item>
+        <item name="colorSurface">@color/cream</item>
+        <item name="colorOnSurface">@color/espresso</item>
+        <item name="android:statusBarColor">@color/espresso</item>
     </style>
-
     <style name="Theme.NVBDilan" parent="Base.Theme.NVBDilan" />
+    <style name="TextAppearance.NVB.ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/outfit_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/cream</item>
+    </style>
+    <style name="CircleImageView">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NVB-Dilan</string>
+    <!--    <string name="app_name">Member+ Hub</string>-->
+    <string name="tagline">MORE POINTS • MORE REWARDS</string>
+
+    <string name="title_projek">Detail Snack Dilan</string>
+    <string name="title_poin_saya">Poin Saya</string>    <string name="title_dashboard">Home Dashboard</string>
+    <string name="title_web">Kopi Kenangan</string>
+    <string name="title_login">Masuk Member+</string>
+    <string name="title_register">Daftar Member+</string>
+    <string name="url_web">https://project-kel9.vercel.app/</string>
 </resources>

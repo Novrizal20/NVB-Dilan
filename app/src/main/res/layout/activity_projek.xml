@@ -1,147 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
-    android:padding="20dp"
+    android:orientation="vertical"
     tools:context=".myProjek.Projek">
 
-    <TextView
-        android:id="@+id/titleDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_blackitalic"
-        android:text="DETAIL SNACK DILAN"
-        android:textColor="@android:color/white"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/imgProduct"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <include
+        android:id="@+id/layoutToolbar"
+        layout="@layout/include_toolbar" />
 
-    <ImageView
-        android:id="@+id/imgProduct"
-        android:layout_width="260dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/dilan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleDetail"
-        app:layout_constraintBottom_toTopOf="@+id/cardGizi" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardGizi"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:cardBackgroundColor="#22FFFFFF"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProduct"
-        app:layout_constraintBottom_toTopOf="@+id/btnBack">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="20dp">
 
-            <TextView
-                android:id="@+id/labelGizi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/jetbrainsmono_extrabold"
-                android:text="INFORMASI GIZI &amp; KOMPOSISI"
-                android:textColor="#D0BCFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="260dp"
+                android:layout_height="150dp"
+                android:contentDescription="Snack Dilan"
+                android:src="@drawable/dilan" />
 
-            <View
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardGizi"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="16dp"
-                android:background="#44FFFFFF" />
-
-            <TextView
-                android:id="@+id/textEnergi"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/jura_bold"
-                android:text="• Energi Total : 120 kkal"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#22FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
 
-            <TextView
-                android:id="@+id/textLemak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jura_bold"
-                android:text="• Lemak Total  : 6g"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            <TextView
-                android:id="@+id/textProtein"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jura_bold"
-                android:text="• Protein      : 1g"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/labelGizi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/outfit_bold"
+                        android:text="INFORMASI GIZI &amp; KOMPOSISI"
+                        android:textColor="@color/member_gold"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/textKarbo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jura_bold"
-                android:text="• Karbohidrat : 16g"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="#44FFFFFF" />
 
-            <TextView
-                android:id="@+id/textGula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jura_bold"
-                android:text="• Gula         : 10g"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textEnergi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="• Energi Total : 120 kkal"
+                        android:textColor="@color/cream"
+                        android:textSize="15sp" />
 
+                    <TextView
+                        android:id="@+id/textLemak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="• Lemak Total  : 6g"
+                        android:textColor="@color/cream"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textProtein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="• Protein      : 1g"
+                        android:textColor="@color/cream"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textKarbo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="• Karbohidrat : 16g"
+                        android:textColor="@color/cream"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textGula"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="• Gula         : 10g"
+                        android:textColor="@color/cream"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="155dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/jura_bold"
-        android:text="Kembali"
-        android:textColor="#3700B3"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:backgroundTint="@android:color/white"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardGizi" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
