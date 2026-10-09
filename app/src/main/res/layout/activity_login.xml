@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Email"
+                android:hint="Username"
                 android:textColorHint="@color/cream_70"
                 app:boxStrokeColor="@color/member_gold"
                 app:hintTextColor="@color/member_gold">
