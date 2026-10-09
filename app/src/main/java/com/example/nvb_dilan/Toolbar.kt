@@ -17,7 +17,6 @@ fun AppCompatActivity.setupToolbar(toolbar: Toolbar, title: String, showBack: Bo
         }
     }
     if (showBack) {
-        // tombol back di toolbar = sama dengan menekan tombol back sistem
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }

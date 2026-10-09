@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/outfit_bold"
+            android:fontFamily="@font/jura_bold"
             android:text="@string/app_name"
             android:textColor="@color/member_gold"
             android:textSize="34sp" />
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/outfit_bold"
+            android:fontFamily="@font/jetbrainsmono_extrabold"
             android:text="Novrizal Van Bastian H"
             android:textColor="@color/cream"
             android:textSize="20sp" />
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/outfit_bold"
+            android:fontFamily="@font/rubik_blackitalic"
             android:text="Buka Snack Dilan"
             android:textColor="@color/espresso"
             android:textSize="16sp"
