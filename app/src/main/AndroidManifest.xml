@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NVBDilan">
         <activity
-            android:name=".MainActivity"
+            android:name=".SpalshScreenActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -47,15 +47,10 @@
             android:name=".myProjek.register"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-<!--        <activity-->
-<!--            android:name=".myProjek.Profil"-->
-<!--            android:exported="false"-->
-<!--            android:windowSoftInputMode="adjustResize" />-->
-<!--        <activity-->
-<!--            android:name=".SpalshScreen"-->
-<!--            android:exported="false"-->
-<!--            android:windowSoftInputMode="adjustResize" />-->
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
