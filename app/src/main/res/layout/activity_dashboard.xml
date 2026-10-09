@@ -50,7 +50,7 @@
                 android:layout_marginEnd="24dp"
                 android:contentDescription="Foto profil"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profil"
+                android:src="@drawable/foto_gue"
                 app:shapeAppearanceOverlay="@style/CircleImageView"
                 app:strokeColor="@color/member_gold"
                 app:strokeWidth="2dp"

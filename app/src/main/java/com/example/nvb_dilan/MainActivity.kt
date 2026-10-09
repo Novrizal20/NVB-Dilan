@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.databinding.ActivityMainBinding
+import com.example.nvb_dilan.myProjek.Profil
 import com.example.nvb_dilan.myProjek.Projek
 import com.example.nvb_dilan.myProjek.WebViewActivity
 import com.example.nvb_dilan.myProjek.dashboard
@@ -36,9 +37,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, login::class.java))
             }
         }
-
         binding.btnWebView.setOnClickListener {
             startActivity(Intent(this, WebViewActivity::class.java))
+        }
+        binding.btnProfil.setOnClickListener {
+            startActivity(Intent(this, Profil::class.java))
         }
     }
 }
