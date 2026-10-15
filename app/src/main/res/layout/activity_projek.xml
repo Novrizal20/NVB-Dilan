@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
-    tools:context=".myProjek.Projek">
+    tools:context=".Home.myProjek.Projek">
 
     <include
         android:id="@+id/layoutToolbar"

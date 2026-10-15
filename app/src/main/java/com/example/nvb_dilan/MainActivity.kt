@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.databinding.ActivityMainBinding
-import com.example.nvb_dilan.myProjek.Profil
-import com.example.nvb_dilan.myProjek.Projek
-import com.example.nvb_dilan.myProjek.WebViewActivity
-import com.example.nvb_dilan.myProjek.dashboard
-import com.example.nvb_dilan.myProjek.point
-import com.example.nvb_dilan.myProjek.login
+import com.example.nvb_dilan.Home.myProjek.Profil
+import com.example.nvb_dilan.Home.myProjek.Projek
+import com.example.nvb_dilan.Home.myProjek.WebViewActivity
+import com.example.nvb_dilan.Home.myProjek.dashboard
+import com.example.nvb_dilan.Home.myProjek.login
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {

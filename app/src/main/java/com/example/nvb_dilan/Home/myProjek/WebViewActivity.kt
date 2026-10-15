@@ -1,15 +1,11 @@
-package com.example.nvb_dilan.myProjek
+package com.example.nvb_dilan.Home.myProjek
 
 import android.os.Bundle
 import android.webkit.WebViewClient
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityWebViewBinding
 import com.example.nvb_dilan.setupToolbar
-import androidx.activity.OnBackPressedCallback
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWebViewBinding

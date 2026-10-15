@@ -5,7 +5,7 @@
     android:id="@+id/mainWeb"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".myProjek.WebViewActivity">
+    tools:context=".Home.myProjek.WebViewActivity">
 
     <include
         android:id="@+id/layoutToolbar"

@@ -1,12 +1,9 @@
-package com.example.nvb_dilan.myProjek
+package com.example.nvb_dilan.Home.myProjek
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityProfilBinding
 import com.example.nvb_dilan.setupToolbar

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NVBDilan">
         <activity
-            android:name=".SpalshScreenActivity"
+            android:name=".BaseActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -24,27 +24,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".myProjek.Projek"
+            android:name=".Home.myProjek.Projek"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myProjek.dashboard"
+            android:name=".Home.myProjek.dashboard"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myProjek.point"
+            android:name=".Home.myProjek.point"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myProjek.WebViewActivity"
+            android:name=".Home.myProjek.WebViewActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myProjek.login"
+            android:name=".Home.myProjek.login"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myProjek.register"
+            android:name=".Home.myProjek.register"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -52,7 +52,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myProjek.Profil"
+            android:name=".Home.myProjek.Profil"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SpalshScreenActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
