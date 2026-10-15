@@ -23,7 +23,7 @@ class SpalshScreenActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             delay(2000)
-            startActivity(Intent(this@SpalshScreenActivity, MainActivity::class.java))
+            startActivity(Intent(this@SpalshScreenActivity, BaseActivity::class.java))
             finish()
         }
     }

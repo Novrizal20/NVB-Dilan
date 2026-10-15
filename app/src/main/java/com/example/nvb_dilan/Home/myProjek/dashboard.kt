@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.BaseActivity
-import com.example.nvb_dilan.MainActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityDashboardBinding
 import com.example.nvb_dilan.setupToolbar

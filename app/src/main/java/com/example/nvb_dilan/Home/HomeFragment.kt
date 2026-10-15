@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.Home.myProjek.Profil
 import com.example.nvb_dilan.Home.myProjek.Projek
 import com.example.nvb_dilan.Home.myProjek.WebViewActivity
@@ -21,6 +22,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -28,6 +30,10 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.layoutToolbar.toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            title = "Home Fragment"
+        }
         val sharedPref = requireContext().getSharedPreferences("user_pref", MODE_PRIVATE)
         binding.btnOpen.setOnClickListener {
             startActivity(Intent(requireContext(), Projek::class.java))

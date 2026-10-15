@@ -1,5 +1,6 @@
 package com.example.nvb_dilan
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.nvb_dilan.Home.HomeFragment
+import com.example.nvb_dilan.Home.myProjek.dashboard
 import com.example.nvb_dilan.Message.MessageFragment
 import com.example.nvb_dilan.More.MoreFragment
 import com.example.nvb_dilan.databinding.ActivityBaseBinding
@@ -20,8 +22,14 @@ class BaseActivity : AppCompatActivity() {
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            v.setPadding(systemBars.left, 0, systemBars.right, 0)
             insets
+        }
+        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        if (sharedPref.getBoolean("isLogin", false)) {
+            startActivity(Intent(this, dashboard::class.java))
+            finish()
+            return
         }
         /** FragmentHome sebagai fragment default */
         replaceFragment(HomeFragment())
