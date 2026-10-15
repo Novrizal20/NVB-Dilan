@@ -3,6 +3,7 @@ package com.example.nvb_dilan.Home.myProjek
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nvb_dilan.BaseActivity
 import com.example.nvb_dilan.MainActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityDashboardBinding
@@ -34,7 +35,7 @@ class dashboard : AppCompatActivity() {
                 .setPositiveButton("Keluar") { _, _ ->
                     getSharedPreferences("user_pref", MODE_PRIVATE).edit().clear().apply()
 
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, BaseActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                 }
