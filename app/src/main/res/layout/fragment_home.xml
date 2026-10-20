@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg_gradient"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_gradient"
     tools:context=".Home.HomeFragment">
+
     <include
         android:id="@+id/layoutToolbar"
-        layout="@layout/include_toolbar" />
+        layout="@layout/include_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="24dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
             <ImageView
                 android:id="@+id/imgLogo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:contentDescription="Logo Member+"
                 android:src="@drawable/logo_member" />
 
@@ -31,11 +41,11 @@
                 android:id="@+id/tvAppTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/jura_bold"
                 android:text="@string/app_name"
                 android:textColor="@color/member_gold"
-                android:textSize="34sp" />
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/tvTagline"
@@ -52,11 +62,11 @@
                 android:id="@+id/Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/jetbrainsmono_extrabold"
                 android:text="Novrizal Van Bastian H"
                 android:textColor="@color/cream"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/NIM"
@@ -68,11 +78,73 @@
                 android:textColor="@color/member_gold"
                 android:textSize="14sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnQrCode"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:paddingVertical="12dp"
+                    android:text="QR Code"
+                    android:textColor="@color/cream"
+                    android:textSize="11sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_qr_code"
+                    app:iconGravity="textTop"
+                    app:iconTint="@color/member_gold"
+                    app:strokeColor="@color/member_gold"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHistory"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:paddingVertical="12dp"
+                    android:text="Riwayat"
+                    android:textColor="@color/cream"
+                    android:textSize="11sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_history"
+                    app:iconGravity="textTop"
+                    app:iconTint="@color/member_gold"
+                    app:strokeColor="@color/member_gold"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVoucher"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:paddingVertical="12dp"
+                    android:text="Voucher"
+                    android:textColor="@color/cream"
+                    android:textSize="11sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_voucher"
+                    app:iconGravity="textTop"
+                    app:iconTint="@color/member_gold"
+                    app:strokeColor="@color/member_gold"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOpen"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/rubik_blackitalic"
                 android:text="Buka Snack Dilan"
                 android:textColor="@color/espresso"
@@ -108,6 +180,7 @@
                 app:icon="@drawable/ic_language"
                 app:iconGravity="textStart"
                 app:iconTint="@color/member_gold" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnProfil"
                 style="@style/Widget.Material3.Button.OutlinedButton"
@@ -124,5 +197,8 @@
                 app:iconTint="@color/member_gold"
                 app:strokeColor="@color/member_gold"
                 app:strokeWidth="1dp" />
+
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

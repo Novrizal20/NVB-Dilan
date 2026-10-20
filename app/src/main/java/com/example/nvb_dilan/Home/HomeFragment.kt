@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nvb_dilan.Home.myProjek.History
 import com.example.nvb_dilan.Home.myProjek.Profil
 import com.example.nvb_dilan.Home.myProjek.Projek
+import com.example.nvb_dilan.Home.myProjek.QR_Code
+import com.example.nvb_dilan.Home.myProjek.Voucher
 import com.example.nvb_dilan.Home.myProjek.WebViewActivity
 import com.example.nvb_dilan.Home.myProjek.dashboard
 import com.example.nvb_dilan.Home.myProjek.login
@@ -54,6 +57,20 @@ class HomeFragment : Fragment() {
         }
         binding.btnProfil.setOnClickListener {
             startActivity(Intent(requireContext(), Profil::class.java))
+        }
+        binding.btnQrCode.setOnClickListener {
+            val intent = Intent(requireContext(), QR_Code::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnHistory.setOnClickListener {
+            val intent = Intent(requireContext(), History::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnVoucher.setOnClickListener {
+            val intent = Intent(requireContext(), Voucher::class.java)
+            startActivity(intent)
         }
     }
 }
