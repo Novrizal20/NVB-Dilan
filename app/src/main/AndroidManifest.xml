@@ -24,15 +24,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Home.HomeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".Home.myProjek.Projek"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.dashboard"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.point"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
