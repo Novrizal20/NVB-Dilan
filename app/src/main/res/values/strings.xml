@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">NVB-Dilan</string>
-    <!--    <string name="app_name">Member+ Hub</string>-->
     <string name="tagline">MORE POINTS • MORE REWARDS</string>
 
     <string name="title_projek">Detail Snack Dilan</string>
@@ -10,8 +9,13 @@
     <string name="title_login">Masuk Member+</string>
     <string name="title_register">Daftar Member+</string>
     <string name="url_web">https://project-kel9.vercel.app/</string>
+    <string name="title_voucher">Voucher Saya</string>
+    <string name="title_qr">Kode QR</string>
     <string name="title_profil">Profil Developer</string>
-    <string name="home_fragment">Home Fragment</string>
-    <string name="more_fragment">More Fragment</string>
-    <string name="message_fragment">Message Fragment</string>
+    <string name="title_profil_saya">Profil Member</string>
+    <string name="title_riwayat">Riwayat Poin</string>
+    <string name="home_promo_title">Promo Spesial</string>
+    <string name="home_promo_tagline">KOPI &amp; KUE • KHUSUS MEMBER+</string>
+    <string name="home_promo_utama">Beli 1 Gratis 1 Kopi Susu</string>
+    <string name="home_promo_detail">Diskon 20% Mont Blanc • Gratis kopi ke-5</string>
 </resources>
