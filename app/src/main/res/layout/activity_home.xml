@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_gradient"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context=".Home.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:contentDescription="Logo Member+"
+                android:src="@drawable/logo_member" />
+
+            <TextView
+                android:id="@+id/tvAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/jura_bold"
+                android:text="@string/home_promo_title"
+                android:textColor="@color/member_gold"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/tvTagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.12"
+                android:gravity="center"
+                android:text="@string/home_promo_tagline"
+                android:textColor="@color/cream_70"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvPromoUtama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/jetbrainsmono_extrabold"
+                android:gravity="center"
+                android:text="@string/home_promo_utama"
+                android:textColor="@color/cream"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvPromoDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/home_promo_detail"
+                android:textColor="@color/member_gold"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpen"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/rubik_blackitalic"
+                android:text="Buka Snack Dilan"
+                android:textColor="@color/espresso"
+                android:textSize="16sp"
+                app:backgroundTint="@color/member_gold"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMember"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Masuk Member+ Hub"
+                android:textColor="@color/cream"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/member_gold"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWebView"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Buka Web Kopi Kenangan"
+                android:textColor="@color/cream"
+                android:textSize="16sp"
+                app:backgroundTint="@color/coffee_brown"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_language"
+                app:iconGravity="textStart"
+                app:iconTint="@color/member_gold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnProfil"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Profil Developer"
+                android:textColor="@color/cream"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_profil"
+                app:iconGravity="textStart"
+                app:iconTint="@color/member_gold"
+                app:strokeColor="@color/member_gold"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
