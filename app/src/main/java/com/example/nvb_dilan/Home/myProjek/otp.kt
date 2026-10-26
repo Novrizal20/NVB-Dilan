@@ -1,13 +1,8 @@
 package com.example.nvb_dilan.Home.myProjek
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityOtpBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -30,14 +25,14 @@ class otp : AppCompatActivity() {
 
             // Rule Soal 2: OTP harus sama dengan No. Handphone
             if (inputOtp.isNotEmpty() && inputOtp == phone) {
-                // Simpan ke SharedPreferences
-                val sharedPref = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE)
+                // Simpan ke SharedPreferences (nama "user_pref" sama dengan yang dibaca login.kt)
+                val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
                 with(sharedPref.edit()) {
-                    putString("NAME", name)
-                    putString("PHONE", phone)
-                    putString("EMAIL", email)
-                    putString("USERNAME", username)
-                    putString("PASSWORD", password)
+                    putString("reg_name", name)
+                    putString("reg_phone", phone)
+                    putString("reg_email", email)
+                    putString("reg_username", username)
+                    putString("reg_password", password)
                     apply()
                 }
 

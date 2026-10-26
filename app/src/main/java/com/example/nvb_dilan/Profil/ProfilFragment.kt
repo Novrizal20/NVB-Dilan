@@ -101,7 +101,8 @@ class ProfilFragment : Fragment() {
                 .setTitle("Keluar akun?")
                 .setMessage("Kamu akan keluar dari Member+ Hub dan harus login lagi.")
                 .setPositiveButton("Keluar") { _, _ ->
-                    sharedPref.edit().clear().apply()
+                    // hapus status login saja (akun hasil registrasi tetap tersimpan)
+                    sharedPref.edit().remove("isLogin").remove("username").apply()
 
                     val intent = Intent(requireContext(), HomeActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

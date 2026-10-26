@@ -8,12 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nvb_dilan.BaseActivity
 import com.example.nvb_dilan.Home.myProjek.Profil
 import com.example.nvb_dilan.Home.myProjek.Projek
 import com.example.nvb_dilan.Home.myProjek.WebViewActivity
-import com.example.nvb_dilan.Home.myProjek.dashboard
 import com.example.nvb_dilan.Home.myProjek.login
-import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -44,7 +43,7 @@ class HomeFragment : Fragment() {
             val isLogin = sharedPref.getBoolean("isLogin", false)
 
             if (isLogin) {
-                startActivity(Intent(requireContext(), dashboard::class.java))
+                startActivity(Intent(requireContext(), BaseActivity::class.java))
             } else {
                 startActivity(Intent(requireContext(), login::class.java))
             }

@@ -44,35 +44,15 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".Home.myProjek.otp"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".Home.myProjek.Profil"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".BaseActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.QR_Code"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.History"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.ItemHistory"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.Voucher"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.ItemVoucher"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".Home.myProjek.otp"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

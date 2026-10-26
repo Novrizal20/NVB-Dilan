@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.nvb_dilan.R
-import com.example.nvb_dilan.databinding.ActivityDashboardBinding
 import com.example.nvb_dilan.databinding.ActivityHistoryBinding
 
 class History : AppCompatActivity() {
