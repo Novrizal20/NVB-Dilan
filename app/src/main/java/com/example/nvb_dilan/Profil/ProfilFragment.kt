@@ -35,15 +35,9 @@ class ProfilFragment : Fragment() {
 
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
 
-        // Menu pengaturan dan bantuan -> AlertDialog
+        // Klik Data Akun Diri -> Buka EditProfilActivity
         binding.rowDataAkun.setOnClickListener {
-            val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "Novrizal"
-            val email = sharedPref.getString("reg_email", null) ?: "Novrizal@gmail.com"
-            val phone = sharedPref.getString("reg_phone", null) ?: "+62 821-4412-998"
-            showInfo(
-                "Data Akun Diri",
-                "Nama: $name\nEmail: $email\nTelepon: $phone\nID Member: PP-8829-4412\nMember sejak: Maret 2023"
-            )
+            startActivity(Intent(requireContext(), EditProfilActivity::class.java))
         }
         binding.rowNotifikasi.setOnClickListener {
             val aktif = sharedPref.getBoolean("notif", true)
