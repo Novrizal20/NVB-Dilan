@@ -12,8 +12,17 @@ class SpalshScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Sudah login -> langsung ke area Member+ Hub
         val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+
+        // Cek apakah onboarding sudah diselesaikan
+        val onboardingFinished = sharedPref.getBoolean("is_onboarding_finished", false)
+        if (!onboardingFinished) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
+
+        // Sudah login -> langsung ke area Member+ Hub
         if (sharedPref.getBoolean("isLogin", false)) {
             startActivity(Intent(this, BaseActivity::class.java))
             finish()
