@@ -1,6 +1,7 @@
 package com.example.nvb_dilan.Dashboard
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.FragmentDashboardBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.Locale
 
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
@@ -20,7 +22,6 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,25 +47,82 @@ class DashboardFragment : Fragment() {
         // Tantangan Hari Ini -> tab Poin
         binding.cardTantangan.setOnClickListener { goToTab(R.id.point) }
 
-        // Promo Eksklusif Gold -> tab Voucher (kategori Paket Hemat), "Lihat Semua" -> semua promo
-        binding.cardPromoEks.setOnClickListener { bukaVoucher("paket") }
+        // Promo Eksklusif Gold -> DetailMenuActivity
+        binding.cardPromoEks.setOnClickListener {
+            bukaDetailMenu("☕", "Beli 1 Gratis 1 Latte", "Khusus pembayaran menggunakan poin balance", "Rp 24.000", 24)
+        }
         binding.tvLihatSemuaPromo.setOnClickListener { goToTab(R.id.voucher) }
 
-        // Menu Kopi -> Voucher kategori Kopi
-        listOf(binding.cardKopi1, binding.cardKopi2, binding.cardKopi3, binding.cardKopi4).forEach { kartu ->
-            kartu.setOnClickListener { bukaVoucher("kopi") }
+        // Menu Kopi -> DetailMenuActivity
+        binding.cardKopi1.setOnClickListener {
+            bukaDetailMenu("☕", "Kopi Kenangan Mantan", "Kopi susu gula aren", "Rp 18.000", 18)
         }
-        // Kue & Roti -> Voucher kategori Kue & Roti
-        listOf(binding.cardKue1, binding.cardKue2, binding.cardKue3, binding.cardKue4).forEach { kartu ->
-            kartu.setOnClickListener { bukaVoucher("kue") }
+        binding.cardKopi2.setOnClickListener {
+            bukaDetailMenu("☕", "Caffe Latte", "Espresso dan susu steamed", "Rp 24.000", 24)
+        }
+        binding.cardKopi3.setOnClickListener {
+            bukaDetailMenu("☕", "Cappuccino", "Foam lembut, rasa pekat", "Rp 24.000", 24)
+        }
+        binding.cardKopi4.setOnClickListener {
+            bukaDetailMenu("☕", "Americano", "Espresso dan air panas", "Rp 20.000", 20)
+        }
+
+        // Kue & Roti -> DetailMenuActivity
+        binding.cardKue1.setOnClickListener {
+            bukaDetailMenu("🍰", "Mont Blanc", "Krim kastanye lembut", "Rp 28.000", 28)
+        }
+        binding.cardKue2.setOnClickListener {
+            bukaDetailMenu("🥐", "Croissant Almond", "Renyah dengan isi almond", "Rp 22.000", 22)
+        }
+        binding.cardKue3.setOnClickListener {
+            bukaDetailMenu("🍫", "Brownies Choco", "Cokelat pekat dan lembut", "Rp 18.000", 18)
+        }
+        binding.cardKue4.setOnClickListener {
+            bukaDetailMenu("🍩", "Donat Gula", "Empuk, taburan gula halus", "Rp 12.000", 12)
         }
     }
 
-    // Simpan kategori yang diminta, lalu pindah ke tab Voucher (dibaca oleh VoucherFragment)
-    private fun bukaVoucher(kategori: String) {
+    override fun onResume() {
+        super.onResume()
+        updateDataDashboard()
+    }
+
+    private fun updateDataDashboard() {
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
-        sharedPref.edit().putString("kategori_voucher", kategori).apply()
-        goToTab(R.id.voucher)
+        val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "Novrizal"
+        val saldo = sharedPref.getInt("saldo_poin", 7450)
+
+        binding.tvGreeting.text = "Hai, $name!"
+
+        val saldoFormatted = String.format(Locale("id", "ID"), "%,d", saldo).replace(',', '.')
+        binding.tvPoinValue.text = saldoFormatted
+
+        val rupiah = saldo * 10
+        val rupiahFormatted = String.format(Locale("id", "ID"), "%,d", rupiah).replace(',', '.')
+        binding.tvKonversiValue.text = "Rp $rupiahFormatted"
+
+        // Perbarui Progress & Teks Tantangan Hari Ini secara dinamis
+        val progressTantangan = sharedPref.getInt("progress_tantangan", 1)
+        val isSelesai = progressTantangan >= 2
+
+        if (isSelesai) {
+            binding.tvProgressValue.text = "2 / 2 Cup (Selesai)"
+            binding.progressBar.progress = 100
+        } else {
+            binding.tvProgressValue.text = "$progressTantangan / 2 Cup"
+            binding.progressBar.progress = progressTantangan * 50
+        }
+    }
+
+    private fun bukaDetailMenu(icon: String, nama: String, desc: String, harga: String, poin: Int) {
+        val intent = Intent(requireContext(), DetailMenuActivity::class.java).apply {
+            putExtra("EXTRA_ICON", icon)
+            putExtra("EXTRA_NAMA", nama)
+            putExtra("EXTRA_DESC", desc)
+            putExtra("EXTRA_HARGA", harga)
+            putExtra("EXTRA_POIN", poin)
+        }
+        startActivity(intent)
     }
 
     private fun goToTab(itemId: Int) {
