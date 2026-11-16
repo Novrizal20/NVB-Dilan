@@ -9,6 +9,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.SimpleAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -19,7 +21,9 @@ import com.example.nvb_dilan.databinding.ActivityDetailPromoBinding
 import com.example.nvb_dilan.setupToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
+import java.util.ArrayList
 import java.util.Calendar
+import java.util.HashMap
 import java.util.Locale
 
 class DetailPromoActivity : AppCompatActivity() {
@@ -57,16 +61,28 @@ class DetailPromoActivity : AppCompatActivity() {
         val batas = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 30) }
         val tanggalBerlaku = SimpleDateFormat("d MMMM yyyy", Locale("id", "ID")).format(batas.time)
 
-        binding.tvSyaratKetentuan.text =
-            "1. Voucher berlaku hingga $tanggalBerlaku.\n" +
-            "2. $berlakuVoucher\n" +
-            "3. Tidak dapat diuangkan atau digabungkan dengan promo cashback lain.\n" +
-            "4. Maksimal penukaran 2 voucher per akun setiap minggunya."
+        // Modul 10: ListView menggunakan SimpleAdapter untuk Syarat & Ketentuan / Cara Penggunaan
+        val rulesList = ArrayList<HashMap<String, String>>()
+        rulesList.add(hashMapOf("judul" to "Masa Berlaku", "keterangan" to "Voucher berlaku hingga $tanggalBerlaku."))
+        rulesList.add(hashMapOf("judul" to "Lokasi Penukaran", "keterangan" to berlakuVoucher))
+        rulesList.add(hashMapOf("judul" to "Ketentuan Promo", "keterangan" to "Tidak dapat diuangkan atau digabungkan dengan promo cash back lain."))
+        rulesList.add(hashMapOf("judul" to "Batas Penggunaan", "keterangan" to "Maksimal penukaran 2 voucher per akun setiap minggunya."))
+        rulesList.add(hashMapOf("judul" to "Cara Pakai di Kasir", "keterangan" to "Tunjukkan QR Code kupon pada kasir saat memesan untuk potongan otomatis."))
 
-        binding.tvCaraPenggunaan.text =
-            "1. Tukarkan poin dan dapatkan kode kupon eksklusif.\n" +
-            "2. Tunjukkan QR Code kupon pada kasir saat memesan.\n" +
-            "3. Kasir akan melakukan verifikasi dan potongan harga otomatis diterapkan pada transaksi kamu."
+        val adapter = SimpleAdapter(
+            this,
+            rulesList,
+            android.R.layout.simple_list_item_2,
+            arrayOf("judul", "keterangan"),
+            intArrayOf(android.R.id.text1, android.R.id.text2)
+        )
+        binding.lvSyaratKetentuan.adapter = adapter
+
+        // SetOnItemClickListener pada ListView untuk menampilkan Toast detail aturan yang diklik
+        binding.lvSyaratKetentuan.setOnItemClickListener { _, _, position, _ ->
+            val item = rulesList[position]
+            Toast.makeText(this, "${item["judul"]}: ${item["keterangan"]}", Toast.LENGTH_SHORT).show()
+        }
 
         binding.btnKonfirmasiTukar.setOnClickListener {
             val latestSaldo = sharedPref.getInt("saldo_poin", 7450)

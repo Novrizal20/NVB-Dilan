@@ -180,13 +180,13 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Section Syarat & Ketentuan -->
+            <!-- Section Ketentuan & Aturan (ListView dengan SimpleAdapter) -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/outfit_bold"
-                android:text="Syarat &amp; Ketentuan"
+                android:text="Ketentuan &amp; Cara Penggunaan"
                 android:textColor="@color/espresso"
                 android:textSize="15sp" />
 
@@ -198,44 +198,14 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp">
 
-                <TextView
-                    android:id="@+id/tvSyaratKetentuan"
+                <ListView
+                    android:id="@+id/lvSyaratKetentuan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="4dp"
-                    android:padding="16dp"
-                    android:text="1. Voucher berlaku hingga 30 hari sejak penukaran.\n2. Tidak dapat diuangkan atau digabungkan dengan promo cashback lain.\n3. Berlaku di seluruh outlet Kopi Kenangan.\n4. Maksimal penukaran 2 voucher per akun setiap minggunya."
-                    android:textColor="@color/espresso"
-                    android:textSize="12sp" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Section Cara Penggunaan -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:fontFamily="@font/outfit_bold"
-                android:text="Cara Penggunaan"
-                android:textColor="@color/espresso"
-                android:textSize="15sp" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
-
-                <TextView
-                    android:id="@+id/tvCaraPenggunaan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="4dp"
-                    android:padding="16dp"
-                    android:text="1. Tukarkan poin dan dapatkan kode kupon eksklusif.\n2. Tunjukkan QR Code kupon pada kasir saat memesan.\n3. Kasir akan melakukan verifikasi dan potongan harga otomatis diterapkan pada transaksi kamu."
-                    android:textColor="@color/espresso"
-                    android:textSize="12sp" />
+                    android:layout_height="260dp"
+                    android:divider="#EEEEEE"
+                    android:dividerHeight="1dp"
+                    android:padding="8dp"
+                    android:scrollbars="vertical" />
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Tombol Konfirmasi Tukar Poin -->
