@@ -1,5 +1,6 @@
 package com.example.nvb_dilan.Point
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.example.nvb_dilan.BaseActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.FragmentPointBinding
+import java.util.Locale
 
 class PointFragment : Fragment() {
     private var _binding: FragmentPointBinding? = null
@@ -21,7 +23,6 @@ class PointFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentPointBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,6 +46,33 @@ class PointFragment : Fragment() {
 
         // "Lihat Semua" -> Riwayat Transaksi (HistoryFragment bukan tab, dibuka lewat BaseActivity.showHistory())
         binding.tvLihatSemua.setOnClickListener { (requireActivity() as BaseActivity).showHistory() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateDataPoin()
+    }
+
+    private fun updateDataPoin() {
+        val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+        val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "NOVRIZAL"
+        val saldo = sharedPref.getInt("saldo_poin", 7450)
+
+        binding.tvHeaderNama.text = "${name.uppercase(Locale.ROOT)} · GOLD"
+
+        val saldoFormatted = String.format(Locale("id", "ID"), "%,d", saldo).replace(',', '.')
+        binding.tvSaldoPoin.text = saldoFormatted
+
+        val rupiah = saldo * 10
+        val rupiahFormatted = String.format(Locale("id", "ID"), "%,d", rupiah).replace(',', '.')
+        binding.tvSetaraRupiah.text = "Setara Rp $rupiahFormatted saldo belanja"
+
+        binding.progressTier.max = 10000
+        binding.progressTier.progress = saldo.coerceAtMost(10000)
+
+        val sisa = (10000 - saldo).coerceAtLeast(0)
+        val sisaFormatted = String.format(Locale("id", "ID"), "%,d", sisa).replace(',', '.')
+        binding.tvSisaPoinLagi.text = "$sisaFormatted Poin Lagi"
     }
 
     private fun filterRiwayat(aktif: TextView, tampil: List<View>) {

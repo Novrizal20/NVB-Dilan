@@ -153,8 +153,12 @@ class VoucherFragment : Fragment() {
         binding.tvVoucherKosong.visibility = if (adaYangTampil) View.GONE else View.VISIBLE
     }
 
-    private fun showDetail(nama: String, poin: String, berlaku: String) {
-        // Masa berlaku voucher: 30 hari dari hari penukaran, dihitung otomatis
+    private fun showDetail(nama: String, poinStr: String, berlaku: String) {
+        val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+        val saldoSaatIni = sharedPref.getInt("saldo_poin", 7450)
+        val hargaPoin = poinStr.replace(".", "").toIntOrNull() ?: 0
+
+        val saldoFormatted = String.format(Locale("id", "ID"), "%,d", saldoSaatIni).replace(',', '.')
         val batas = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 30) }
         val tanggalBerlaku = SimpleDateFormat("d MMMM yyyy", Locale("id", "ID")).format(batas.time)
 
@@ -162,32 +166,50 @@ class VoucherFragment : Fragment() {
             .setTitle("Konfirmasi Tukar Poin")
             .setMessage(
                 "$nama\n\n" +
-                        "Harga Penukaran: $poin Poin\n" +
-                        "Saldo Poin Anda: 7.450 Poin\n\n" +
-                        "Syarat & Ketentuan:\n" +
-                        "1. Voucher berlaku hingga $tanggalBerlaku.\n" +
-                        "2. $berlaku\n" +
-                        "3. Maksimal penukaran 2 voucher per akun setiap minggunya."
+                "Harga Penukaran: $poinStr Poin\n" +
+                "Saldo Poin Anda: $saldoFormatted Poin\n\n" +
+                "Syarat & Ketentuan:\n" +
+                "1. Voucher berlaku hingga $tanggalBerlaku.\n" +
+                "2. $berlaku\n" +
+                "3. Maksimal penukaran 2 voucher per akun setiap minggunya."
             )
             .setPositiveButton("Tukar Sekarang") { dialog, _ ->
                 dialog.dismiss()
 
-                // Kode kupon dibuat SEKALI lalu dipakai di notifikasi dan dialog,
-                // supaya keduanya menampilkan kode yang sama.
+                // 1. Cek kecukupan saldo poin
+                if (saldoSaatIni < hargaPoin) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Saldo Poin Tidak Cukup")
+                        .setMessage("Saldo poin kamu saat ini ($saldoFormatted Poin) tidak mencukupi untuk menukar voucher ini ($poinStr Poin). Yuk tingkatkan transaksi kamu!")
+                        .setPositiveButton("OK", null)
+                        .show()
+                    return@setPositiveButton
+                }
+
+                // 2. Potong saldo poin & simpan ke SharedPreferences
+                val sisaPoin = saldoSaatIni - hargaPoin
+                sharedPref.edit().putInt("saldo_poin", sisaPoin).apply()
+
                 val kodeKupon = buatKodeKupon()
 
-                // 1. Kirim notifikasi sistem (status bar notification)
-                notifikasiTukar(nama, kodeKupon)
+                // 3. Cek toggle notifikasi sebelum kirim notifikasi
+                val notifAktif = sharedPref.getBoolean("notif", true)
+                if (notifAktif) {
+                    notifikasiTukar(nama, kodeKupon)
+                }
 
-                // 2. Tampilkan Pop-Up Dialog Berhasil (bukan hanya Toast/Snackbar)
+                val sisaFormatted = String.format(Locale("id", "ID"), "%,d", sisaPoin).replace(',', '.')
+
+                // 4. Pop-Up Dialog Berhasil
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle("🎉 Penukaran Poin Berhasil!")
                     .setMessage(
                         "Selamat! Penukaran poin berhasil dilakukan.\n\n" +
-                                "Voucher: $nama\n" +
-                                "Kode Kupon: $kodeKupon\n" +
-                                "Poin Terpotong: -$poin Poin\n\n" +
-                                "Tunjukkan QR Code di menu Member+ kepada kasir saat bertransaksi."
+                        "Voucher: $nama\n" +
+                        "Kode Kupon: $kodeKupon\n" +
+                        "Poin Terpotong: -$poinStr Poin\n" +
+                        "Sisa Saldo Poin: $sisaFormatted Poin\n\n" +
+                        "Tunjukkan QR Code di menu Member+ kepada kasir saat bertransaksi."
                     )
                     .setPositiveButton("Selesai", null)
                     .show()

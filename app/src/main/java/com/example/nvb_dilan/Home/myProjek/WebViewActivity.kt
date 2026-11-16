@@ -2,6 +2,7 @@ package com.example.nvb_dilan.Home.myProjek
 
 import android.os.Bundle
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityWebViewBinding
@@ -9,6 +10,7 @@ import com.example.nvb_dilan.setupToolbar
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWebViewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWebViewBinding.inflate(layoutInflater)
@@ -28,12 +30,17 @@ class WebViewActivity : AppCompatActivity() {
                 binding.layoutToolbar.appBar.setExpanded(true, true)
             }
         }
-    }
-    override fun onBackPressed() {
-        if (binding.webView.canGoBack()) {
-            binding.webView.goBack() // Kembali ke halaman web sebelumnya
-        } else {
-            super.onBackPressed() // Keluar activity sebelumnya
-        }
+
+        // Penanganan tombol back menggunakan OnBackPressedCallback (menggantikan onBackPressed deprecated)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.webView.canGoBack()) {
+                    binding.webView.goBack() // Kembali ke halaman web sebelumnya
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed() // Keluar activity
+                }
+            }
+        })
     }
 }

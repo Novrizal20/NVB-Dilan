@@ -13,6 +13,7 @@ import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.FragmentProfilBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import java.util.Locale
 
 class ProfilFragment : Fragment() {
     private var _binding: FragmentProfilBinding? = null
@@ -22,7 +23,6 @@ class ProfilFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,9 +37,12 @@ class ProfilFragment : Fragment() {
 
         // Menu pengaturan dan bantuan -> AlertDialog
         binding.rowDataAkun.setOnClickListener {
+            val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "Novrizal"
+            val email = sharedPref.getString("reg_email", null) ?: "Novrizal@gmail.com"
+            val phone = sharedPref.getString("reg_phone", null) ?: "+62 821-4412-998"
             showInfo(
                 "Data Akun Diri",
-                "Nama: Novrizal\nEmail: Novrizal@gmail.com\nTelepon: +62 821-4412-998\nID Member: PP-8829-4412\nMember sejak: Maret 2023"
+                "Nama: $name\nEmail: $email\nTelepon: $phone\nID Member: PP-8829-4412\nMember sejak: Maret 2023"
             )
         }
         binding.rowNotifikasi.setOnClickListener {
@@ -113,6 +116,34 @@ class ProfilFragment : Fragment() {
                 .setNegativeButton("Batal", null)
                 .show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateDataProfil()
+    }
+
+    private fun updateDataProfil() {
+        val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+        val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "Novrizal"
+        val email = sharedPref.getString("reg_email", null) ?: "Novrizal@gmail.com"
+        val phone = sharedPref.getString("reg_phone", null) ?: "+62 821-4412-998"
+
+        binding.tvNamaProfil.text = name
+        binding.tvKontak.text = "$email • $phone"
+
+        val saldo = sharedPref.getInt("saldo_poin", 7450)
+        val saldoFormatted = String.format(Locale("id", "ID"), "%,d", saldo).replace(',', '.')
+
+        binding.tvStatPoin.text = saldoFormatted
+        binding.tvKemajuanNilai.text = "$saldoFormatted / 10.000 Poin"
+
+        binding.progressKemajuan.max = 10000
+        binding.progressKemajuan.progress = saldo.coerceAtMost(10000)
+
+        val sisa = (10000 - saldo).coerceAtLeast(0)
+        val sisaFormatted = String.format(Locale("id", "ID"), "%,d", sisa).replace(',', '.')
+        binding.tvKemajuanLabel.text = "Menuju Platinum ($sisaFormatted Poin lagi)"
     }
 
     private fun showInfo(judul: String, pesan: String) {

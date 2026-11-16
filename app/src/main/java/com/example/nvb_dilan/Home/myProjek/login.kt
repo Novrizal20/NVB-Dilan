@@ -51,6 +51,9 @@ class login : AppCompatActivity() {
                 val editor = sharedPref.edit()
                 editor.putBoolean("isLogin", true)
                 editor.putString("username", username)
+                if (sharedPref.getString("reg_name", null).isNullOrEmpty()) {
+                    editor.putString("reg_name", username)
+                }
                 editor.apply()
 
                 // Masuk ke area Member+ Hub (DashboardFragment tampil pertama).
@@ -61,7 +64,7 @@ class login : AppCompatActivity() {
             } else {
                 MaterialAlertDialogBuilder(this)
                     .setTitle("Login Gagal")
-                    .setMessage("Username atau Password tidak sah! Sila cuba lagi.")
+                    .setMessage("Username atau Password salah! Silakan coba lagi.")
                     .setPositiveButton("OK", null)
                     .show()
             }

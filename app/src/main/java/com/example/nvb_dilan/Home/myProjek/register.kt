@@ -3,12 +3,10 @@ package com.example.nvb_dilan.Home.myProjek
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.ActivityRegisterBinding
+import com.example.nvb_dilan.setupToolbar
 
 class register : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -17,6 +15,8 @@ class register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupToolbar(binding.layoutToolbar.toolbar, getString(R.string.title_register))
 
         binding.btnRegister.setOnClickListener {
             val name = binding.etName.text.toString().trim()
