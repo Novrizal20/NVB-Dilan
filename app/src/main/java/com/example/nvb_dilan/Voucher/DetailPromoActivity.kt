@@ -15,11 +15,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.nvb_dilan.BaseActivity
 import com.example.nvb_dilan.R
+import com.example.nvb_dilan.data.api.SupabaseClient
+import com.example.nvb_dilan.data.model.TransaksiModel
 import com.example.nvb_dilan.databinding.ActivityDetailPromoBinding
 import com.example.nvb_dilan.setupToolbar
+import com.example.nvb_dilan.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.Calendar
@@ -46,8 +51,11 @@ class DetailPromoActivity : AppCompatActivity() {
         val hargaPoin = intent.getIntExtra("EXTRA_POIN", 2500)
         val berlakuVoucher = intent.getStringExtra("EXTRA_BERLAKU") ?: "Berlaku di seluruh outlet Kopi Kenangan."
 
+        val sessionManager = SessionManager(this)
+        val userSession = sessionManager.getUser()
+
         val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
-        val saldoSaatIni = sharedPref.getInt("saldo_poin", 7450)
+        val saldoSaatIni = userSession?.saldo_poin ?: sharedPref.getInt("saldo_poin", 7450)
 
         val poinFormatted = String.format(Locale("id", "ID"), "%,d", hargaPoin).replace(',', '.')
         val saldoFormatted = String.format(Locale("id", "ID"), "%,d", saldoSaatIni).replace(',', '.')
@@ -78,14 +86,14 @@ class DetailPromoActivity : AppCompatActivity() {
         )
         binding.lvSyaratKetentuan.adapter = adapter
 
-        // SetOnItemClickListener pada ListView untuk menampilkan Toast detail aturan yang diklik
         binding.lvSyaratKetentuan.setOnItemClickListener { _, _, position, _ ->
             val item = rulesList[position]
             Toast.makeText(this, "${item["judul"]}: ${item["keterangan"]}", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnKonfirmasiTukar.setOnClickListener {
-            val latestSaldo = sharedPref.getInt("saldo_poin", 7450)
+            val currentUser = sessionManager.getUser()
+            val latestSaldo = currentUser?.saldo_poin ?: sharedPref.getInt("saldo_poin", 7450)
             val latestSaldoFormatted = String.format(Locale("id", "ID"), "%,d", latestSaldo).replace(',', '.')
 
             // Cek kecukupan saldo poin
@@ -98,14 +106,34 @@ class DetailPromoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Kurangi saldo poin & simpan
+            // Kurangi saldo poin & simpan ke SessionManager & SharedPreferences
             val sisaPoin = latestSaldo - hargaPoin
+            sessionManager.updateSaldoPoin(sisaPoin)
             sharedPref.edit().putInt("saldo_poin", sisaPoin).apply()
 
             val sisaFormatted = String.format(Locale("id", "ID"), "%,d", sisaPoin).replace(',', '.')
             binding.tvSaldoKamu.text = "$sisaFormatted Poin"
 
             val kodeKupon = "KK-" + (100000..999999).random()
+
+            // Update Supabase API & catat transaksi penukaran voucher
+            lifecycleScope.launch {
+                try {
+                    val userId = currentUser?.id ?: 1L
+                    SupabaseClient.instance.updateSaldoPoin("eq.$userId", mapOf("saldo_poin" to sisaPoin))
+
+                    val transaksi = TransaksiModel(
+                        user_id = userId,
+                        judul_transaksi = "Penukaran $namaVoucher",
+                        tipe = "TUKAR_VOUCHER",
+                        poin = hargaPoin,
+                        catatan = "Kode Kupon: $kodeKupon"
+                    )
+                    SupabaseClient.instance.createTransaksi(transaksi)
+                } catch (e: Exception) {
+                    // Fallback
+                }
+            }
 
             // Cek pengaturan notifikasi
             val notifAktif = sharedPref.getBoolean("notif", true)

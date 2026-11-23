@@ -707,10 +707,25 @@
                 android:background="@drawable/bg_header_banner"
                 android:backgroundTint="#E8F5E9"
                 android:padding="14dp"
-                android:text="Daftar voucher di halaman ini masih berupa contoh."
+                android:text="Daftar voucher terhubung langsung dengan Supabase API."
                 android:textColor="@color/espresso"
                 android:textSize="12sp" />
 
         </LinearLayout>
     </ScrollView>
+
+    <!-- Floating Action Button Tambah Voucher (Khusus Admin) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabTambahVoucher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:contentDescription="Tambah Voucher"
+        android:src="@drawable/ic_more"
+        android:visibility="gone"
+        app:backgroundTint="@color/coffee_brown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
