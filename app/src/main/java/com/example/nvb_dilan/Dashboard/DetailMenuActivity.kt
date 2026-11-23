@@ -2,6 +2,7 @@ package com.example.nvb_dilan.Dashboard
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.nvb_dilan.data.api.SupabaseClient
@@ -105,7 +106,7 @@ class DetailMenuActivity : AppCompatActivity() {
             // Simpan transaksi baru & update saldo di Supabase REST API (CREATE)
             lifecycleScope.launch {
                 try {
-                    val userId = user?.id ?: 1L
+                    val userId = if ((user?.id ?: 0L) > 0L) user!!.id!! else 1L
                     SupabaseClient.instance.updateSaldoPoin("eq.$userId", mapOf("saldo_poin" to saldoBaru))
 
                     val transaksiBody = mapOf<String, Any>(
@@ -115,9 +116,14 @@ class DetailMenuActivity : AppCompatActivity() {
                         "poin" to totalPoinMasuk,
                         "catatan" to "Pesanan ${jumlah}x $nama ($totalHargaStr)"
                     )
-                    SupabaseClient.instance.createTransaksi(transaksiBody)
+                    val res = SupabaseClient.instance.createTransaksi(transaksiBody)
+                    if (!res.isSuccessful) {
+                        Log.e("DetailMenuActivity", "Gagal simpan transaksi (${res.code()}): ${res.errorBody()?.string()}")
+                    } else {
+                        Log.d("DetailMenuActivity", "Berhasil simpan transaksi ke Supabase!")
+                    }
                 } catch (e: Exception) {
-                    // Fallback offline
+                    Log.e("DetailMenuActivity", "Error Supabase: ${e.message}")
                 }
             }
 
