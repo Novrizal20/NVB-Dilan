@@ -3,9 +3,14 @@ package com.example.nvb_dilan.Dashboard
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.nvb_dilan.data.api.SupabaseClient
+import com.example.nvb_dilan.data.model.TransaksiModel
 import com.example.nvb_dilan.databinding.ActivityDetailMenuBinding
 import com.example.nvb_dilan.setupToolbar
+import com.example.nvb_dilan.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class DetailMenuActivity : AppCompatActivity() {
@@ -53,8 +58,11 @@ class DetailMenuActivity : AppCompatActivity() {
         }
 
         binding.btnPesan.setOnClickListener {
+            val sessionManager = SessionManager(this)
+            val user = sessionManager.getUser()
+
             val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
-            val saldoAwal = sharedPref.getInt("saldo_poin", 7450)
+            val saldoAwal = user?.saldo_poin ?: sharedPref.getInt("saldo_poin", 7450)
 
             val totalPoinDapat = poinSatuan * jumlah
 
@@ -87,12 +95,32 @@ class DetailMenuActivity : AppCompatActivity() {
             val totalPoinMasuk = totalPoinDapat + bonusTantangan
             val saldoBaru = saldoAwal + totalPoinMasuk
 
-            // Simpan saldo poin baru ke SharedPreferences
+            // Simpan saldo poin baru ke SessionManager & SharedPreferences
+            sessionManager.updateSaldoPoin(saldoBaru)
             sharedPref.edit().putInt("saldo_poin", saldoBaru).apply()
 
             val totalHargaNum = hargaSatuanNum * jumlah
             val totalHargaStr = "Rp " + String.format(Locale("id", "ID"), "%,d", totalHargaNum).replace(',', '.')
             val saldoBaruFormatted = String.format(Locale("id", "ID"), "%,d", saldoBaru).replace(',', '.')
+
+            // Simpan transaksi baru & update saldo di Supabase REST API (CREATE)
+            lifecycleScope.launch {
+                try {
+                    val userId = user?.id ?: 1L
+                    SupabaseClient.instance.updateSaldoPoin("eq.$userId", mapOf("saldo_poin" to saldoBaru))
+
+                    val transaksi = TransaksiModel(
+                        user_id = userId,
+                        judul_transaksi = nama,
+                        tipe = "DAPAT_POIN",
+                        poin = totalPoinMasuk,
+                        catatan = "Pesanan ${jumlah}x $nama ($totalHargaStr)"
+                    )
+                    SupabaseClient.instance.createTransaksi(transaksi)
+                } catch (e: Exception) {
+                    // Fallback offline
+                }
+            }
 
             val pesanSukses = if (tantanganBaruSelesai) {
                 "Terima kasih telah memesan $nama (${jumlah}x)!\n\n" +

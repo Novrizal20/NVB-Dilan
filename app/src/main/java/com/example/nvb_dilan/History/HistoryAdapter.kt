@@ -10,14 +10,19 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nvb_dilan.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class HistoryAdapter(private val historyList: List<HistoryModel>) :
-    RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
+class HistoryAdapter(
+    private val historyList: List<HistoryModel>,
+    private val onEditCatatan: (HistoryModel) -> Unit,
+    private val onDeleteItem: (HistoryModel) -> Unit
+) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivIcon: ImageView = view.findViewById(R.id.ivIcon)
         val tvJudul: TextView = view.findViewById(R.id.tvJudul)
         val tvTanggal: TextView = view.findViewById(R.id.tvTanggal)
+        val tvCatatan: TextView = view.findViewById(R.id.tvCatatan)
         val tvNominal: TextView = view.findViewById(R.id.tvNominal)
         val tvPoin: TextView = view.findViewById(R.id.tvPoin)
     }
@@ -35,6 +40,13 @@ class HistoryAdapter(private val historyList: List<HistoryModel>) :
         holder.tvNominal.text = item.nominal
         holder.tvPoin.text = item.poinText
 
+        if (!item.catatan.isNullOrEmpty()) {
+            holder.tvCatatan.visibility = View.VISIBLE
+            holder.tvCatatan.text = "Catatan: ${item.catatan}"
+        } else {
+            holder.tvCatatan.visibility = View.GONE
+        }
+
         val context = holder.itemView.context
         if (item.isMasuk) {
             holder.ivIcon.setImageResource(R.drawable.ic_history)
@@ -44,6 +56,23 @@ class HistoryAdapter(private val historyList: List<HistoryModel>) :
             holder.ivIcon.setImageResource(R.drawable.ic_voucher)
             holder.ivIcon.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FCE4EC"))
             holder.tvPoin.setTextColor(ContextCompat.getColor(context, R.color.poin_keluar))
+        }
+
+        // Opsi Edit Catatan / Hapus saat item diklik atau ditekan lama
+        holder.itemView.setOnClickListener {
+            MaterialAlertDialogBuilder(context)
+                .setTitle("Kelola Transaksi")
+                .setMessage("Pilih tindakan untuk riwayat transaksi ini:")
+                .setPositiveButton("Edit Catatan") { dialog, _ ->
+                    onEditCatatan(item)
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Hapus") { dialog, _ ->
+                    onDeleteItem(item)
+                    dialog.dismiss()
+                }
+                .setNeutralButton("Batal", null)
+                .show()
         }
     }
 

@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="12dp"
     app:cardElevation="0dp">
@@ -48,6 +51,16 @@
                 android:text="15 Apr 2025, 14:10"
                 android:textColor="#888888"
                 android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvCatatan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Catatan: Pesanan 1x Kopi"
+                android:textColor="#999999"
+                android:textSize="10sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
