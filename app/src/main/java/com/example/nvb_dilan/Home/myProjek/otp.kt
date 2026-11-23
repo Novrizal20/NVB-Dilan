@@ -11,8 +11,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.nvb_dilan.data.api.SupabaseClient
+import com.example.nvb_dilan.data.model.UserModel
 import com.example.nvb_dilan.databinding.ActivityOtpBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class otp : AppCompatActivity() {
     private lateinit var binding: ActivityOtpBinding
@@ -79,13 +83,36 @@ class otp : AppCompatActivity() {
                     apply()
                 }
 
-                Toast.makeText(this, "Verifikasi Berhasil! Silakan Login.", Toast.LENGTH_SHORT).show()
+                // Simpan pendaftaran user ke Supabase REST API
+                val newUser = UserModel(
+                    nama_lengkap = name,
+                    username = username,
+                    email = email,
+                    password = password,
+                    no_hp = phone,
+                    saldo_poin = 500,
+                    level_member = "Gold Member",
+                    role = "user"
+                )
 
-                val intent = Intent(this, login::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                lifecycleScope.launch {
+                    try {
+                        val response = SupabaseClient.instance.registerUser(newUser)
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@otp, "Registrasi Supabase Berhasil!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this@otp, "Registrasi Lokal Berhasil (Supabase Code: ${response.code()})", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@otp, "Registrasi Lokal Berhasil", Toast.LENGTH_SHORT).show()
+                    }
+
+                    val intent = Intent(this@otp, login::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                    finish()
                 }
-                startActivity(intent)
-                finish()
             } else {
                 MaterialAlertDialogBuilder(this)
                     .setTitle("Verifikasi Gagal")

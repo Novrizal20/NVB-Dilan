@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.Home.HomeActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.FragmentProfilBinding
+import com.example.nvb_dilan.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
@@ -39,6 +40,7 @@ class ProfilFragment : Fragment() {
         binding.rowDataAkun.setOnClickListener {
             startActivity(Intent(requireContext(), EditProfilActivity::class.java))
         }
+
         binding.rowNotifikasi.setOnClickListener {
             val aktif = sharedPref.getBoolean("notif", true)
             MaterialAlertDialogBuilder(requireContext())
@@ -56,6 +58,7 @@ class ProfilFragment : Fragment() {
                 }
                 .show()
         }
+
         binding.rowBahasa.setOnClickListener {
             val bahasa = sharedPref.getString("bahasa", "Indonesia")
             MaterialAlertDialogBuilder(requireContext())
@@ -73,6 +76,7 @@ class ProfilFragment : Fragment() {
                 }
                 .show()
         }
+
         binding.rowSandi.setOnClickListener {
             showInfo("Keamanan Kata Sandi", "Kata sandi akun diatur saat login. Fitur ubah kata sandi masuk roadmap Fase 2.")
         }
@@ -92,19 +96,18 @@ class ProfilFragment : Fragment() {
             showInfo("Kebijakan Privasi Data", "Data akun dan riwayat transaksi hanya dipakai untuk program Member+ dan tidak dibagikan tanpa persetujuanmu. (Teks contoh)")
         }
 
-        // Satu-satunya tombol keluar
+        // Tombol keluar: hapus sesi di SessionManager dan user_pref
         binding.btnKeluar.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Keluar akun?")
                 .setMessage("Kamu akan keluar dari Member+ Hub dan harus login lagi.")
                 .setPositiveButton("Keluar") { _, _ ->
-                    // hapus status login saja (akun hasil registrasi tetap tersimpan)
+                    SessionManager(requireContext()).logout()
                     sharedPref.edit().remove("isLogin").remove("username").apply()
 
                     val intent = Intent(requireContext(), HomeActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
-                    // posisi di Fragment -> destroy BaseActivity lewat requireActivity()
                     requireActivity().finish()
                 }
                 .setNegativeButton("Batal", null)
@@ -118,15 +121,28 @@ class ProfilFragment : Fragment() {
     }
 
     private fun updateDataProfil() {
+        val sessionManager = SessionManager(requireContext())
+        val userSession = sessionManager.getUser()
+
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
-        val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "Novrizal"
-        val email = sharedPref.getString("reg_email", null) ?: "Novrizal@gmail.com"
-        val phone = sharedPref.getString("reg_phone", null) ?: "+62 821-4412-998"
+
+        val name = userSession?.nama_lengkap?.ifEmpty { null }
+            ?: sharedPref.getString("reg_name", null)
+            ?: sharedPref.getString("username", null)
+            ?: "Novrizal"
+
+        val email = userSession?.email?.ifEmpty { null }
+            ?: sharedPref.getString("reg_email", null)
+            ?: "Novrizal@gmail.com"
+
+        val phone = userSession?.no_hp?.ifEmpty { null }
+            ?: sharedPref.getString("reg_phone", null)
+            ?: "+62 821-4412-998"
 
         binding.tvNamaProfil.text = name
         binding.tvKontak.text = "$email • $phone"
 
-        val saldo = sharedPref.getInt("saldo_poin", 7450)
+        val saldo = userSession?.saldo_poin ?: sharedPref.getInt("saldo_poin", 7450)
         val saldoFormatted = String.format(Locale("id", "ID"), "%,d", saldo).replace(',', '.')
 
         binding.tvStatPoin.text = saldoFormatted

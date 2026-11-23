@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.databinding.FragmentDashboardBinding
+import com.example.nvb_dilan.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.Locale
@@ -88,9 +89,16 @@ class DashboardFragment : Fragment() {
     }
 
     private fun updateDataDashboard() {
+        val sessionManager = SessionManager(requireContext())
+        val userSession = sessionManager.getUser()
+
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
-        val name = sharedPref.getString("reg_name", null) ?: sharedPref.getString("username", null) ?: "Novrizal"
-        val saldo = sharedPref.getInt("saldo_poin", 7450)
+        val name = userSession?.nama_lengkap?.ifEmpty { null }
+            ?: sharedPref.getString("reg_name", null)
+            ?: sharedPref.getString("username", null)
+            ?: "Novrizal"
+
+        val saldo = userSession?.saldo_poin ?: sharedPref.getInt("saldo_poin", 7450)
 
         binding.tvGreeting.text = "Hai, $name!"
 
