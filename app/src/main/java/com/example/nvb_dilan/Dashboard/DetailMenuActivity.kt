@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.nvb_dilan.data.api.SupabaseClient
-import com.example.nvb_dilan.data.model.TransaksiModel
 import com.example.nvb_dilan.databinding.ActivityDetailMenuBinding
 import com.example.nvb_dilan.setupToolbar
 import com.example.nvb_dilan.utils.SessionManager
@@ -109,14 +108,14 @@ class DetailMenuActivity : AppCompatActivity() {
                     val userId = user?.id ?: 1L
                     SupabaseClient.instance.updateSaldoPoin("eq.$userId", mapOf("saldo_poin" to saldoBaru))
 
-                    val transaksi = TransaksiModel(
-                        user_id = userId,
-                        judul_transaksi = nama,
-                        tipe = "DAPAT_POIN",
-                        poin = totalPoinMasuk,
-                        catatan = "Pesanan ${jumlah}x $nama ($totalHargaStr)"
+                    val transaksiBody = mapOf<String, Any>(
+                        "user_id" to userId,
+                        "judul_transaksi" to nama,
+                        "tipe" to "DAPAT_POIN",
+                        "poin" to totalPoinMasuk,
+                        "catatan" to "Pesanan ${jumlah}x $nama ($totalHargaStr)"
                     )
-                    SupabaseClient.instance.createTransaksi(transaksi)
+                    SupabaseClient.instance.createTransaksi(transaksiBody)
                 } catch (e: Exception) {
                     // Fallback offline
                 }

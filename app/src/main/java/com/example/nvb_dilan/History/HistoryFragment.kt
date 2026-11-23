@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.data.api.SupabaseClient
-import com.example.nvb_dilan.data.model.TransaksiModel
 import com.example.nvb_dilan.databinding.FragmentHistoryBinding
 import com.example.nvb_dilan.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -111,15 +110,10 @@ class HistoryFragment : Fragment() {
                 val catatanBaru = etCatatan.text.toString().trim()
                 lifecycleScope.launch {
                     try {
-                        val itemUpdated = TransaksiModel(
-                            id = item.id,
-                            user_id = item.userId,
-                            judul_transaksi = item.judul,
-                            tipe = if (item.isMasuk) "DAPAT_POIN" else "TUKAR_VOUCHER",
-                            poin = item.poinText.replace("[^0-9]".toRegex(), "").toIntOrNull() ?: 0,
-                            catatan = catatanBaru
+                        val body = mapOf<String, Any>(
+                            "catatan" to catatanBaru
                         )
-                        val response = SupabaseClient.instance.updateTransaksi("eq.${item.id}", itemUpdated)
+                        val response = SupabaseClient.instance.updateTransaksi("eq.${item.id}", body)
                         if (response.isSuccessful) {
                             Toast.makeText(ctx, "Catatan transaksi diperbarui!", Toast.LENGTH_SHORT).show()
                             muatTransaksiSupabase()

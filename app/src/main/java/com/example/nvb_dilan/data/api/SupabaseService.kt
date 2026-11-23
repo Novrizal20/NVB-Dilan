@@ -18,71 +18,131 @@ interface SupabaseService {
     }
 
     // ================= USERS =================
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @POST("users")
     suspend fun registerUser(
-        @Body user: UserModel
+        @Body user: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
-    @Headers("apikey: $API_KEY", "Accept-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile"
+    )
     @GET("users")
     suspend fun loginUser(
         @Query("username") username: String,
         @Query("password") password: String
     ): Response<List<UserModel>>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @PATCH("users")
     suspend fun updateSaldoPoin(
         @Query("id") id: String,
-        @Body body: Map<String, Int>
+        @Body body: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
     // ================= VOUCHERS =================
-    @Headers("apikey: $API_KEY", "Accept-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile"
+    )
     @GET("vouchers")
     suspend fun getVouchers(): Response<List<VoucherModel>>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @POST("vouchers")
     suspend fun createVoucher(
-        @Body voucher: VoucherModel
+        @Body voucher: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @PATCH("vouchers")
     suspend fun updateVoucher(
         @Query("id") id: String,
-        @Body voucher: VoucherModel
+        @Body voucher: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @DELETE("vouchers")
     suspend fun deleteVoucher(
         @Query("id") id: String
     ): Response<Unit>
 
     // ================= TRANSAKSI_POIN =================
-    @Headers("apikey: $API_KEY", "Accept-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile"
+    )
     @GET("transaksi_poin")
     suspend fun getTransaksi(
         @Query("user_id") userId: String
     ): Response<List<TransaksiModel>>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @POST("transaksi_poin")
     suspend fun createTransaksi(
-        @Body transaksi: TransaksiModel
+        @Body transaksi: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @PATCH("transaksi_poin")
     suspend fun updateTransaksi(
         @Query("id") id: String,
-        @Body transaksi: TransaksiModel
+        @Body transaksi: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
-    @Headers("apikey: $API_KEY", "Content-Profile: mobile")
+    @Headers(
+        "apikey: $API_KEY",
+        "Authorization: Bearer $API_KEY",
+        "Accept-Profile: mobile",
+        "Content-Profile: mobile",
+        "Prefer: return=minimal"
+    )
     @DELETE("transaksi_poin")
     suspend fun deleteTransaksi(
         @Query("id") id: String

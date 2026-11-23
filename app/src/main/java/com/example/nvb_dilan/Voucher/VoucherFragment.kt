@@ -25,6 +25,9 @@ import com.example.nvb_dilan.databinding.FragmentVoucherBinding
 import com.example.nvb_dilan.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class VoucherFragment : Fragment() {
     private var _binding: FragmentVoucherBinding? = null
@@ -83,66 +86,9 @@ class VoucherFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Klik banner / kartu voucher / tombol Tukar -> Buka DetailPromoActivity
+        // Klik banner
         val v1Action = { showDetail("Kopi Kenangan - Voucher Diskon Rp 25.000", 2500, "Berlaku untuk semua varian kopi di seluruh gerai Kopi Kenangan.") }
-        val v2Action = { showDetail("Kopi Kenangan - Beli 1 Gratis 1 Kopi Susu", 1200, "Berlaku untuk menu Kopi Susu di seluruh gerai Kopi Kenangan.") }
-        val v3Action = { showDetail("Kopi Kenangan - Beli 1 Gratis 1 Latte", 1800, "Berlaku untuk menu Latte di seluruh gerai Kopi Kenangan.") }
-        val v4Action = { showDetail("Kopi Kenangan - Diskon 20% Mont Blanc", 1500, "Berlaku untuk menu Mont Blanc di seluruh gerai Kopi Kenangan.") }
-        val v5Action = { showDetail("Kopi Kenangan - Gratis 1 Croissant Almond", 2200, "Berlaku untuk menu Croissant Almond di seluruh gerai Kopi Kenangan.") }
-        val v6Action = { showDetail("Kopi Kenangan - Paket Kopi + Kue Rp 35.000", 3000, "Berlaku untuk satu kopi dan satu kue pilihan di seluruh gerai Kopi Kenangan.") }
-
         binding.cardFlash.setOnClickListener { v1Action() }
-
-        val setupCardClick = { card: View, action: () -> Unit, voucherModel: VoucherModel ->
-            card.setOnClickListener { action() }
-            if (isAdmin) {
-                card.setOnLongClickListener {
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Kelola Voucher (Admin)")
-                        .setItems(arrayOf("Edit Voucher", "Hapus Voucher")) { _, which ->
-                            if (which == 0) {
-                                dialogTambahAtauEditVoucher(voucherModel)
-                            } else {
-                                dialogKonfirmasiHapus(voucherModel)
-                            }
-                        }
-                        .show()
-                    true
-                }
-            }
-        }
-
-        setupCardClick(
-            binding.cardVoucher1, v1Action,
-            VoucherModel(1L, "Kopi Kenangan - Voucher Diskon Rp 25.000", "kopi", 2500, "30 Hari", "Berlaku untuk semua varian kopi di seluruh gerai Kopi Kenangan.")
-        )
-        setupCardClick(
-            binding.cardVoucher2, v2Action,
-            VoucherModel(2L, "Kopi Kenangan - Beli 1 Gratis 1 Kopi Susu", "kopi", 1200, "30 Hari", "Berlaku untuk menu Kopi Susu di seluruh gerai Kopi Kenangan.")
-        )
-        setupCardClick(
-            binding.cardVoucher3, v3Action,
-            VoucherModel(3L, "Kopi Kenangan - Beli 1 Gratis 1 Latte", "kopi", 1800, "30 Hari", "Berlaku untuk menu Latte di seluruh gerai Kopi Kenangan.")
-        )
-        setupCardClick(
-            binding.cardVoucher4, v4Action,
-            VoucherModel(4L, "Kopi Kenangan - Diskon 20% Mont Blanc", "kue", 1500, "30 Hari", "Berlaku untuk menu Mont Blanc di seluruh gerai Kopi Kenangan.")
-        )
-        setupCardClick(
-            binding.cardVoucher5, v5Action,
-            VoucherModel(5L, "Kopi Kenangan - Gratis 1 Croissant Almond", "kue", 2200, "30 Hari", "Berlaku untuk menu Croissant Almond di seluruh gerai Kopi Kenangan.")
-        )
-        setupCardClick(
-            binding.cardVoucher6, v6Action,
-            VoucherModel(6L, "Kopi Kenangan - Paket Kopi + Kue Rp 35.000", "paket", 3000, "30 Hari", "Berlaku untuk satu kopi dan satu kue pilihan di seluruh gerai Kopi Kenangan.")
-        )
-
-        binding.cardVoucher1Tukar.setOnClickListener { v1Action() }
-        binding.cardVoucher2Tukar.setOnClickListener { v2Action() }
-        binding.cardVoucher3Tukar.setOnClickListener { v3Action() }
-        binding.cardVoucher4Tukar.setOnClickListener { v4Action() }
-        binding.cardVoucher5Tukar.setOnClickListener { v5Action() }
-        binding.cardVoucher6Tukar.setOnClickListener { v6Action() }
 
         // Datang dari Dashboard (kartu menu kopi / kue / promo) -> kategori langsung terpilih
         val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
@@ -161,9 +107,55 @@ class VoucherFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val response = SupabaseClient.instance.getVouchers()
-                if (response.isSuccessful && !response.body().isNullOrEmpty()) {
+                if (response.isSuccessful && response.body() != null) {
                     val listVouchers = response.body()!!
-                    Toast.makeText(context, "Terhubung ke Supabase (${listVouchers.size} voucher)", Toast.LENGTH_SHORT).show()
+
+                    val kartuList = listOf(
+                        Triple(binding.cardVoucher1, binding.cardVoucher1Nama, binding.cardVoucher1Poin),
+                        Triple(binding.cardVoucher2, binding.cardVoucher2Nama, binding.cardVoucher2Poin),
+                        Triple(binding.cardVoucher3, binding.cardVoucher3Nama, binding.cardVoucher3Poin),
+                        Triple(binding.cardVoucher4, binding.cardVoucher4Nama, binding.cardVoucher4Poin),
+                        Triple(binding.cardVoucher5, binding.cardVoucher5Nama, binding.cardVoucher5Poin),
+                        Triple(binding.cardVoucher6, binding.cardVoucher6Nama, binding.cardVoucher6Poin)
+                    )
+
+                    val sessionManager = SessionManager(requireContext())
+                    val isAdmin = sessionManager.isAdmin()
+
+                    for (i in kartuList.indices) {
+                        val (card, tvNama, tvPoin) = kartuList[i]
+                        if (i < listVouchers.size) {
+                            val v = listVouchers[i]
+                            card.visibility = View.VISIBLE
+                            tvNama.text = v.nama_voucher
+                            val poinFormatted = String.format(Locale("id", "ID"), "%,d", v.poin_dibutuhkan).replace(',', '.')
+                            tvPoin.text = "★ $poinFormatted Poin"
+
+                            val action = { showDetail(v.nama_voucher, v.poin_dibutuhkan, v.deskripsi) }
+                            card.setOnClickListener { action() }
+
+                            if (isAdmin) {
+                                card.setOnLongClickListener {
+                                    MaterialAlertDialogBuilder(requireContext())
+                                        .setTitle("Kelola Voucher (Admin)")
+                                        .setItems(arrayOf("Edit Voucher", "Hapus Voucher")) { _, which ->
+                                            if (which == 0) {
+                                                dialogTambahAtauEditVoucher(v)
+                                            } else {
+                                                dialogKonfirmasiHapus(v)
+                                            }
+                                        }
+                                        .show()
+                                    true
+                                }
+                            }
+                        } else {
+                            // Sembunyikan kartu jika item telah dihapus / tidak ada di Supabase
+                            card.visibility = View.GONE
+                        }
+                    }
+
+                    terapkanFilter()
                 }
             } catch (e: Exception) {
                 // Fallback offline
@@ -194,8 +186,8 @@ class VoucherFragment : Fragment() {
             setText(voucherOld?.poin_dibutuhkan?.toString() ?: "2500")
         }
         val etMasaBerlaku = EditText(ctx).apply {
-            hint = "Masa Berlaku (misal: 30 Hari)"
-            setText(voucherOld?.masa_berlaku ?: "30 Hari")
+            hint = "Masa Berlaku Hari (misal: 25 atau 2025-05-30)"
+            setText(voucherOld?.masa_berlaku ?: "30")
         }
         val etDesc = EditText(ctx).apply {
             hint = "Deskripsi Voucher"
@@ -215,7 +207,7 @@ class VoucherFragment : Fragment() {
                 val nama = etNama.text.toString().trim()
                 val kat = etKategori.text.toString().trim()
                 val poinInt = etPoin.text.toString().trim().toIntOrNull() ?: 2500
-                val masa = etMasaBerlaku.text.toString().trim()
+                val masaInput = etMasaBerlaku.text.toString().trim()
                 val desc = etDesc.text.toString().trim()
 
                 if (nama.isEmpty()) {
@@ -223,28 +215,42 @@ class VoucherFragment : Fragment() {
                     return@setPositiveButton
                 }
 
-                val voucherNew = VoucherModel(
-                    id = voucherOld?.id,
-                    nama_voucher = nama,
-                    kategori = kat,
-                    poin_dibutuhkan = poinInt,
-                    masa_berlaku = masa,
-                    deskripsi = desc
+                // Format tanggal YYYY-MM-DD agar sesuai dengan tipe data DATE di Supabase
+                val dateFormatted = if (masaInput.matches("\\d{4}-\\d{2}-\\d{2}".toRegex())) {
+                    masaInput
+                } else {
+                    val days = masaInput.replace("[^0-9]".toRegex(), "").toIntOrNull() ?: 30
+                    val calendar = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, days) }
+                    SimpleDateFormat("yyyy-MM-dd", Locale.US).format(calendar.time)
+                }
+
+                val body = mapOf<String, Any>(
+                    "nama_voucher" to nama,
+                    "merchant" to "Kopi Kenangan",
+                    "kategori" to kat,
+                    "poin_dibutuhkan" to poinInt,
+                    "masa_berlaku" to dateFormatted,
+                    "deskripsi" to desc
                 )
 
                 lifecycleScope.launch {
                     try {
                         val response = if (isEdit) {
-                            SupabaseClient.instance.updateVoucher("eq.${voucherOld?.id}", voucherNew)
+                            SupabaseClient.instance.updateVoucher("eq.${voucherOld?.id}", body)
                         } else {
-                            SupabaseClient.instance.createVoucher(voucherNew)
+                            SupabaseClient.instance.createVoucher(body)
                         }
 
                         if (response.isSuccessful) {
                             Toast.makeText(ctx, if (isEdit) "Voucher diperbarui!" else "Voucher ditambahkan!", Toast.LENGTH_SHORT).show()
                             muatVoucherSupabase()
                         } else {
-                            Toast.makeText(ctx, "Gagal simpan (Code ${response.code()})", Toast.LENGTH_SHORT).show()
+                            val errMessage = response.errorBody()?.string() ?: "Unknown error"
+                            MaterialAlertDialogBuilder(ctx)
+                                .setTitle("Gagal Simpan (Code ${response.code()})")
+                                .setMessage("Pesan Detail dari Supabase:\n\n$errMessage")
+                                .setPositiveButton("OK", null)
+                                .show()
                         }
                     } catch (e: Exception) {
                         Toast.makeText(ctx, "Koneksi Error: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -268,7 +274,12 @@ class VoucherFragment : Fragment() {
                             Toast.makeText(requireContext(), "Voucher berhasil dihapus!", Toast.LENGTH_SHORT).show()
                             muatVoucherSupabase()
                         } else {
-                            Toast.makeText(requireContext(), "Gagal hapus (Code ${response.code()})", Toast.LENGTH_SHORT).show()
+                            val errMessage = response.errorBody()?.string() ?: ""
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle("Gagal Hapus (Code ${response.code()})")
+                                .setMessage("Pesan Detail dari Supabase:\n\n$errMessage")
+                                .setPositiveButton("OK", null)
+                                .show()
                         }
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), "Koneksi Error: ${e.message}", Toast.LENGTH_SHORT).show()

@@ -19,7 +19,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.nvb_dilan.BaseActivity
 import com.example.nvb_dilan.R
 import com.example.nvb_dilan.data.api.SupabaseClient
-import com.example.nvb_dilan.data.model.TransaksiModel
 import com.example.nvb_dilan.databinding.ActivityDetailPromoBinding
 import com.example.nvb_dilan.setupToolbar
 import com.example.nvb_dilan.utils.SessionManager
@@ -122,14 +121,14 @@ class DetailPromoActivity : AppCompatActivity() {
                     val userId = currentUser?.id ?: 1L
                     SupabaseClient.instance.updateSaldoPoin("eq.$userId", mapOf("saldo_poin" to sisaPoin))
 
-                    val transaksi = TransaksiModel(
-                        user_id = userId,
-                        judul_transaksi = "Penukaran $namaVoucher",
-                        tipe = "TUKAR_VOUCHER",
-                        poin = hargaPoin,
-                        catatan = "Kode Kupon: $kodeKupon"
+                    val transaksiBody = mapOf<String, Any>(
+                        "user_id" to userId,
+                        "judul_transaksi" to "Penukaran $namaVoucher",
+                        "tipe" to "TUKAR_VOUCHER",
+                        "poin" to hargaPoin,
+                        "catatan" to "Kode Kupon: $kodeKupon"
                     )
-                    SupabaseClient.instance.createTransaksi(transaksi)
+                    SupabaseClient.instance.createTransaksi(transaksiBody)
                 } catch (e: Exception) {
                     // Fallback
                 }

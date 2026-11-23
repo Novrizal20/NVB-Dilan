@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.nvb_dilan.data.api.SupabaseClient
-import com.example.nvb_dilan.data.model.UserModel
 import com.example.nvb_dilan.databinding.ActivityOtpBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -84,20 +83,20 @@ class otp : AppCompatActivity() {
                 }
 
                 // Simpan pendaftaran user ke Supabase REST API
-                val newUser = UserModel(
-                    nama_lengkap = name,
-                    username = username,
-                    email = email,
-                    password = password,
-                    no_hp = phone,
-                    saldo_poin = 500,
-                    level_member = "Gold Member",
-                    role = "user"
+                val userBody = mapOf<String, Any>(
+                    "nama_lengkap" to name,
+                    "username" to username,
+                    "email" to email,
+                    "password" to password,
+                    "no_hp" to phone,
+                    "saldo_poin" to 500,
+                    "level_member" to "Gold Member",
+                    "role" to "user"
                 )
 
                 lifecycleScope.launch {
                     try {
-                        val response = SupabaseClient.instance.registerUser(newUser)
+                        val response = SupabaseClient.instance.registerUser(userBody)
                         if (response.isSuccessful) {
                             Toast.makeText(this@otp, "Registrasi Supabase Berhasil!", Toast.LENGTH_SHORT).show()
                         } else {
